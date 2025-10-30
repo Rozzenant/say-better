@@ -28,6 +28,8 @@ function App() {
           <option value="sarcastic">Саркастичный</option>
           <option value="rude">Грубый</option>
           <option value="neutral">Нейтральный</option>
+          <option value="summary">Сжатчик</option>
+          <option value="translator">Переводчик на английский</option>
         </select>
       </header>
 
