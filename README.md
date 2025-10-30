@@ -41,11 +41,12 @@ VITE_OPENROUTER_API_KEY=your_openrouter_api_key
 
 ### 4. Настройка Supabase
 Создайте таблицу messages с полями:
-
+```sql
 id: bigint
 content: text
 transformed: text
 created_at: timestamp
+```
 
 Роль anon должна иметь права на insert/select/update
 
