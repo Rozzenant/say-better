@@ -6,30 +6,53 @@ interface Props {
   isLoading: boolean;
 }
 
+const MIN_LENGTH = 5;
+const MAX_LENGTH = 200;
+const FORBIDDEN_CHARS = /[<>$%{}"]/;
+
 const MessageForm: React.FC<Props> = ({ onSubmit, isLoading }) => {
   const [input, setInput] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(input);
+    const text = input.trim();
+
+    if (text.length < MIN_LENGTH || text.length > MAX_LENGTH) {
+      setError(`Сообщение должно быть от ${MIN_LENGTH} до ${MAX_LENGTH} символов.`);
+      return;
+    }
+
+    if (FORBIDDEN_CHARS.test(text)) {
+      setError("Сообщение содержит недопустимые символы: <, >, $, %, {, }, \".");
+      return;
+    }
+
+    setError(null);
+    onSubmit(text);
     setInput("");
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Введите сообщение..."
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        minLength={5}
-        maxLength={200}
-        required
-      />
-      <button type="submit" disabled={isLoading}>
-        {isLoading ? "Загрузка..." : "Отправить"}
-      </button>
-    </form>
+    <>
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="input-group">
+          <input
+            type="text"
+            placeholder="Введите сообщение..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            disabled={isLoading}
+          />
+        </div>
+
+        <button type="submit" className="btn-submit" disabled={isLoading}>
+          {isLoading ? "Загрузка..." : "Отправить"}
+        </button>
+      </form>
+
+      <div className="error-message">{error}</div>
+    </>
   );
 };
 
