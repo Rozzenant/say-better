@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import type { Message } from "../types/message";
 import { fetchMessages, sendMessage, updateMessage } from "../lib/messagesApi";
+import { fetchLLMResponse } from "../api/fetchLLMResponse";
+import type { SystemPromptRole } from "../prompts/systemPrompt";
 
-export function useMessages() {
+export function useMessages(selectedRole: SystemPromptRole) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [deliveryStatus, setDeliveryStatus] = useState<Record<number, "success" | "error">>({});
   const [isLoading, setIsLoading] = useState(false);
@@ -35,8 +37,14 @@ export function useMessages() {
       const msg = await sendMessage(text);
       setMessages((prev) => [...prev, msg]);
       setDeliveryStatus((prev) => ({ ...prev, [msg.id]: "success" }));
+      
+      const transformed = await fetchLLMResponse(text, selectedRole);
+      if (!transformed) {
+        console.error("Ошибка получения ответа от LLM");
+        setIsLoading(false);
+        return;
+      }
 
-      const transformed = `(вежливо: "${text}")`;
       const updated = await updateMessage(msg.id, transformed);
 
       setMessages((prev) => prev.map((m) => (m.id === msg.id ? updated : m)));

@@ -7,7 +7,7 @@ interface Props {
 }
 
 const MIN_LENGTH = 5;
-const MAX_LENGTH = 200;
+const MAX_LENGTH = 300;
 const FORBIDDEN_CHARS = /[<>$%{}"]/;
 
 const MessageForm: React.FC<Props> = ({ onSubmit, isLoading }) => {

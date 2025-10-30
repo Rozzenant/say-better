@@ -38,7 +38,13 @@
 
 .main-name {
   margin-bottom: 1em;
+  padding-bottom: 0.5em;
   border-bottom: #4caf50 1px solid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
 }
 
 .message {
@@ -66,7 +72,8 @@
   border-color: #a5d6a7;
   background: transparent;
   margin-left: auto;
-  text-align: right;
+  text-align: left;
+
 }
 
 .delivery-status {
@@ -83,4 +90,13 @@
   color: #f44336;
 }
 
+.role-selector {
+  background: #2c2c2c;
+  color: #fff;
+  border: 1px solid #444;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  outline: none;
+}
 
