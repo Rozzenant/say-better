@@ -32,7 +32,7 @@ npm install
 ```
 
 ### 3. Настройка переменных окружения
-Переименуй .env.local.example в .env.local и добавь указанные ключи:
+Переименуйте .env.local.example в .env.local и добавьте указанные ключи:
 ```bash
 VITE_SUPABASE_URL=https://<your-project>.supabase.co
 VITE_SUPABASE_ANON_KEY=your_anon_key
@@ -40,7 +40,7 @@ VITE_OPENROUTER_API_KEY=your_openrouter_api_key
 ```
 
 ### 4. Настройка Supabase
-Создайте Таблицу messages с полями:
+Создайте таблицу messages с полями:
 
 id: bigint
 content: text
