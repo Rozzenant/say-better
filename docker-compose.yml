@@ -1,0 +1,9 @@
+services:
+  say-better:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "25000:80"
+    container_name: say-better
+    restart: always
