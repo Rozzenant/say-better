@@ -5,7 +5,7 @@ COPY package*.json ./
 COPY tsconfig*.json ./
 COPY vite.config.ts ./
 COPY eslint.config.js ./
-
+COPY .env.local.example .env.local
 COPY src ./src
 COPY public ./public
 COPY index.html ./
