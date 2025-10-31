@@ -69,17 +69,26 @@ cd say-better
 nano .env.local.example
 ```
 
-### 3. Соберите контейнер
+### 3. Настройка Supabase
+Создайте таблицу messages с полями:
+```sql
+id: bigint
+content: text
+transformed: text
+created_at: timestamp
+```
+
+### 4. Соберите контейнер
 ```bash
 docker compose build
 ```
 
-### 4. Запустите приложение
+### 5. Запустите приложение
 ```bash
 docker compose up -d
 ```
 
-### 5. Приложение будет доступно по адресу
+### 6. Приложение будет доступно по адресу
 ```
 http://<IP-сервера>:25000/main-page
 ```
