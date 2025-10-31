@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Message } from "../types/message";
 import { fetchMessages, sendMessage, updateMessage } from "../lib/messagesApi";
 import { fetchLLMResponse } from "../api/fetchLLMResponse";
+import { fetchBotHubResponse } from "../api/fetchBotHub";
 import type { SystemPromptRole } from "../prompts/systemPrompt";
 
 export function useMessages(selectedRole: SystemPromptRole) {
@@ -9,6 +10,14 @@ export function useMessages(selectedRole: SystemPromptRole) {
   const [deliveryStatus, setDeliveryStatus] = useState<Record<number, "success" | "error">>({});
   const [isLoading, setIsLoading] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
+
+  const useBothub = !!import.meta.env.VITE_BOTHUB_API_KEY?.trim();
+
+  const fetchTransformed = async (text: string, role: SystemPromptRole) => {
+    return useBothub
+      ? await fetchBotHubResponse(text, role)
+      : await fetchLLMResponse(text, role);
+  };
 
   useEffect(() => {
     const load = async () => {
@@ -37,8 +46,8 @@ export function useMessages(selectedRole: SystemPromptRole) {
       const msg = await sendMessage(text);
       setMessages((prev) => [...prev, msg]);
       setDeliveryStatus((prev) => ({ ...prev, [msg.id]: "success" }));
-      
-      const transformed = await fetchLLMResponse(text, selectedRole);
+
+      const transformed = await fetchTransformed(text, selectedRole);
       if (!transformed) {
         console.error("Ошибка получения ответа от LLM");
         setIsLoading(false);
@@ -46,7 +55,6 @@ export function useMessages(selectedRole: SystemPromptRole) {
       }
 
       const updated = await updateMessage(msg.id, transformed);
-
       setMessages((prev) => prev.map((m) => (m.id === msg.id ? updated : m)));
     } catch (err) {
       console.error(err);
