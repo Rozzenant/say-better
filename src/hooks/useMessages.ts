@@ -5,6 +5,14 @@ import { fetchLLMResponse } from "../api/fetchLLMResponse";
 import { fetchBotHubResponse } from "../api/fetchBotHub";
 import type { SystemPromptRole } from "../prompts/systemPrompt";
 
+const stripSurroundingQuotes = (input: string): string => {
+  const trimmed = input.trim();
+  if (trimmed.startsWith('"') && trimmed.endsWith('"')) {
+    return trimmed.slice(1, -1);
+  }
+  return trimmed;
+};
+
 export function useMessages(selectedRole: SystemPromptRole) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [deliveryStatus, setDeliveryStatus] = useState<Record<number, "success" | "error">>({});
@@ -54,7 +62,7 @@ export function useMessages(selectedRole: SystemPromptRole) {
         return;
       }
 
-      const updated = await updateMessage(msg.id, transformed);
+      const updated = await updateMessage(msg.id, stripSurroundingQuotes(transformed));
       setMessages((prev) => prev.map((m) => (m.id === msg.id ? updated : m)));
     } catch (err) {
       console.error(err);

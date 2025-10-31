@@ -28,7 +28,7 @@ export async function fetchBotHubResponse(
 
 
 
-  console.log(instructionWrappedMessage)
+  // console.log(instructionWrappedMessage)
 
   if (!response.ok) {
     console.error("BotHub API Error:", await response.text());
