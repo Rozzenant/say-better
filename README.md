@@ -77,6 +77,7 @@ content: text
 transformed: text
 created_at: timestamp
 ```
+Роль anon должна иметь права на insert/select/update
 
 ### 4. Соберите контейнер
 ```bash
