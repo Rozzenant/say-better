@@ -41,6 +41,12 @@ VITE_SUPABASE_ANON_KEY=your_anon_key
 VITE_OPENROUTER_API_KEY=your_openrouter_api_key
 ```
 
+И если есть, то по возможности используйте
+```bash
+VITE_BOTHUB_API_KEY=your_bothub_api_key
+VITE_BOTHUB_BASE_URL=<https://bothub.chat/api>
+```
+
 ### 4. Настройка Supabase
 Создайте таблицу messages с полями:
 ```sql
