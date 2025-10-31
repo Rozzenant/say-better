@@ -17,7 +17,7 @@ export async function fetchBotHubResponse(
       "Authorization": `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: "claude-3.5-sonnet",        // или другая модель BotHub (посмотреть на Bothub)
+      model: "gpt-4o-mini",        // или другая модель BotHub (посмотреть на Bothub)
     //   temperature : 0.0,
       messages: [
         systemPrompts[selectedRole],
